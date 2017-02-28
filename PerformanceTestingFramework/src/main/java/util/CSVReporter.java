@@ -13,16 +13,22 @@ import java.util.List;
  * @author Yury_Suponeu
  */
 public class CSVReporter extends Reporter {
+    public static final String SEPARATOR = ",";
     private static final String WRITER_ERROR = "Error: Can't report test log!";
     private static final String DATE_TIME_FORMAT = "yyyyMMdd_HHmmss";
-    private static final String HEADER = "ITERATION,BROWSER,VERSION,DURATION(s)" + System.lineSeparator();
+    private static final String HEADER = "INDEX,BROWSER,VERSION,MIN(s),AVERAGE(s),90% (s)" + System.lineSeparator();
+    private static final String REPORT_FOLDER = "Reports";
 
     @Override
     public void report(List<String> log) throws IOException {
         BufferedWriter writer = null;
         try {
+            File reportDir = new File(REPORT_FOLDER);
+            if (!reportDir.exists()){
+                reportDir.mkdir();
+            }
             String timeLog = new SimpleDateFormat(DATE_TIME_FORMAT).format(Calendar.getInstance().getTime());
-            File logFile = new File(timeLog + ".csv");
+            File logFile = new File(REPORT_FOLDER + "/" + timeLog + ".csv");
             writer = new BufferedWriter(new FileWriter(logFile));
             writer.write(HEADER);
             for (String line : log){

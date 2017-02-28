@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -13,8 +15,10 @@ import java.util.Properties;
  * @author Yury_Suponeu
  */
 public class WebDriverProvider {
-    private static final String DRIVERS_PROPERTIES_PATH = "src/main/resources/drivers.properties";
+    private static final String DRIVERS_PROPERTIES_PATH = "C:/Users/Yury_Suponeu/IdeaProjects/PerformanceTestingFramework/" +
+            "src/main/resources/drivers.properties";
     private static Properties driversProperties;
+    private static DesiredCapabilities capabilities;
 
     public static final String CHROME = "chrome";
     public static final String GECKO = "gecko";
@@ -24,6 +28,11 @@ public class WebDriverProvider {
     static {
         try {
             driversProperties = PropertiesReader.getProperties(DRIVERS_PROPERTIES_PATH);
+            //Fix issue with Firefox quit()
+            capabilities = DesiredCapabilities.firefox();
+            FirefoxProfile profile = new FirefoxProfile();
+            profile.setPreference("browser.tabs.remote.autostart.2", false);
+            capabilities.setCapability("firefox_profile", profile);
             setSystemPropertyForDriver(CHROME);
             setSystemPropertyForDriver(GECKO);
             setSystemPropertyForDriver(EDGE);
@@ -43,7 +52,7 @@ public class WebDriverProvider {
             case CHROME:
                 return new ChromeDriver();
             case GECKO:
-                return new FirefoxDriver();
+                return new FirefoxDriver(capabilities);
             case EDGE:
                 return new EdgeDriver();
             default:
