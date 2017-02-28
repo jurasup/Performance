@@ -6,6 +6,8 @@ import util.WebDriverProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.CSVReporter.SEPARATOR;
+
 /**
  * Provides functionality to handle (execute and log) test scenarios.
  * @author Yury_Suponeu
@@ -26,11 +28,11 @@ public class TestScenarioHandler {
         testElements.addAll(initializeOpenPageTestElements());
         int testIndex = 0;
         for (TestElement element : testElements) {
+            testIndex++;
             for (int i = 0; i < iterationsNumber; i++){
-                testIndex++;
                 element.executeTest();
-                log.add(testIndex + "," + element.getLog());
             }
+            log.add(testIndex + SEPARATOR + element.getLog());
         }
     }
 

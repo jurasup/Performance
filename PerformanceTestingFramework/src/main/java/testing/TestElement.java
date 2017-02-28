@@ -18,6 +18,4 @@ public abstract class TestElement {
      * @return log string
      */
     public abstract String getLog() throws NotExecutedException;
-
-    protected abstract void setLog();
 }

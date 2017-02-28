@@ -1,7 +1,9 @@
 import exceptions.NotExecutedException;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import testing.OpenPageTestElement;
 import testing.TestScenarioHandler;
 import util.CSVReporter;
 import util.Reporter;
@@ -14,10 +16,10 @@ import java.io.IOException;
  * @author Yury_Suponeu
  */
 public class Launcher {
-    private static final int NUMBER_OF_ITERARIONS = 3;
+    private static final int NUMBER_OF_ITERATIONS = 5;
 
     public static void main(String[] args) {
-        TestScenarioHandler scenarioHandler = new TestScenarioHandler(NUMBER_OF_ITERARIONS);
+        TestScenarioHandler scenarioHandler = new TestScenarioHandler(NUMBER_OF_ITERATIONS);
         Reporter reporter = new CSVReporter();
         try {
             scenarioHandler.executeScenarios();
